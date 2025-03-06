@@ -8,19 +8,19 @@ from stable_baselines3 import DQN
 
 
 # Create environment
-vec_env = make_atari_env("BreakoutNoFrameskip-v4", n_envs=4, seed=0)
+vec_env = make_atari_env("ALE/Pacman-v5", n_envs=4, seed=0)
 vec_env = VecFrameStack(vec_env, n_stack=4)
 
 # Train agent
 model = DQN(
     "CnnPolicy", vec_env,
     buffer_size=100_000,
-    learning_starts=50_000,
+    learning_starts=100_000,
     exploration_fraction=0.1,
     exploration_final_eps=0.01,
     learning_rate=1e-4,
     batch_size=32,
-    target_update_interval=10_000,
+    target_update_interval=1_000,
     train_freq=4,
     gradient_steps=1,
     policy_kwargs={"net_arch": [256, 256]},
@@ -33,12 +33,12 @@ eval_callback = EvalCallback(
     best_model_save_path="./best_model/",
     log_path="./logs/",
     eval_freq=50_000,
-    n_eval_episodes=10,
+    n_eval_episodes=15,
     deterministic=True,
     render=False
 )
 model.learn(total_timesteps=10_000_000, callback=eval_callback)
-model.save("breakout_dqn")
+model.save("packman_dqn")
 
 # Retrain agent
 # model = DQN.load("breakout_dqn")
@@ -46,7 +46,7 @@ model.save("breakout_dqn")
 #     vec_env,
 #     best_model_save_path="./best_model/",
 #     log_path="./logs/",
-#     eval_freq=50_000,  # Evaluate every 50k timesteps
+#     eval_freq=50_000,
 #     n_eval_episodes=10,
 #     deterministic=True,
 #     render=False
