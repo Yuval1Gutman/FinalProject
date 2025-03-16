@@ -1,8 +1,8 @@
 """
-Train a DQN agent on an Atari environment.
+Train a DQN agent on a regular gymnasium environment.
 Used by app.py to train the model.
 For manual training, run the following command:
-    python -m src.train_scripts.train_atari <environment>
+    python -m src.train_scripts.train_regular <environment>
     list of available environments in config.py
 """
 
@@ -16,21 +16,20 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 import gymnasium as gym  # pylint: disable=unused-import
 import ale_py            # pylint: disable=unused-import
 # Environment Preprocessing
-from stable_baselines3.common.env_util import make_atari_env
-from stable_baselines3.common.vec_env import VecFrameStack
+from stable_baselines3.common.env_util import make_vec_env
 # Model
 from stable_baselines3 import DQN
 from stable_baselines3.common.callbacks import EvalCallback
 
-from src.config import ROOT_PATH, atari_environments
+from src.config import ROOT_PATH, regular_environments
 
 
-def train_atari(environment, hyperparameters=None, verbose=0):
+def train_regular(environment, hyperparameters=None, verbose=0):
     """
-    Train a DQN agent on an Atari game.
+    Train a DQN agent on a regular gymnasium environment.
 
     Args:
-        environment (str): The game that the model trains on. List of available games in README.md
+        environment (str): The environment that the model trains on. List of available environments in README.md
         hyperparameters (dict): Dictionary containing hyperparameters for training.
             Supported parameters:
             - learning_rate (float): Learning rate for the optimizer
@@ -56,18 +55,18 @@ def train_atari(environment, hyperparameters=None, verbose=0):
         'learning_rate': 1e-4,
         'gamma': 0.99,
         'buffer_size': 100_000,
-        'batch_size': 32,
-        'learning_starts': 100_000,
+        'batch_size': 128,
+        'learning_starts': 1_000,
         'exploration_fraction': 0.1,
-        'exploration_final_eps': 0.01,
+        'exploration_final_eps': 0.1,
         'target_update_interval': 1_000,
         'train_freq': 4,
-        'gradient_steps': 1,
+        'gradient_steps': -1,
         'n_envs': 4,
-        'total_timesteps': 10_000_000,
+        'total_timesteps': 100_000,
         'policy_kwargs': {"net_arch": [256, 256]},
         'device': 'cuda',
-        'eval_freq': 50_000,
+        'eval_freq': 10_000,
         'n_eval_episodes': 10
     }
 
@@ -75,7 +74,7 @@ def train_atari(environment, hyperparameters=None, verbose=0):
     if hyperparameters:
         params.update(hyperparameters)
 
-    if environment not in atari_environments:
+    if environment not in regular_environments:
         raise KeyError
 
     if verbose:
@@ -90,12 +89,11 @@ def train_atari(environment, hyperparameters=None, verbose=0):
     os.makedirs(logs_path, exist_ok=True)
 
     # Create environment
-    vec_env = make_atari_env(atari_environments[environment], n_envs=params['n_envs'], seed=0)
-    vec_env = VecFrameStack(vec_env, n_stack=4)
+    vec_env = make_vec_env(regular_environments[environment], n_envs=params['n_envs'], seed=0)
 
     # Create model
     model = DQN(
-        "CnnPolicy",
+        "MlpPolicy",
         vec_env,
         learning_rate=params['learning_rate'],
         gamma=params['gamma'],
@@ -118,7 +116,7 @@ def train_atari(environment, hyperparameters=None, verbose=0):
         vec_env,
         best_model_save_path=environment_path,
         log_path=logs_path,
-        eval_freq=params['eval_freq'],
+        eval_freq=params['eval_freq'] // params['n_envs'],
         n_eval_episodes=params['n_eval_episodes'],
         deterministic=True,
         render=False
@@ -141,9 +139,9 @@ if __name__ == "__main__":
     except IndexError:
         print("Error: No environment selected")
         sys.exit(1)
-    if selected_env not in atari_environments:
+    if selected_env not in regular_environments:
         print(f"Error: The environment '{selected_env}' doesn't exist.")
-        print(f"Available environments: {", ".join(atari_environments.keys())}")
+        print(f"Available environments: {", ".join(regular_environments.keys())}")
         sys.exit(2)
 
-    train_atari(selected_env)
+    train_regular(selected_env, verbose=1)

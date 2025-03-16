@@ -1,7 +1,7 @@
 """
 Test the trained model on an Atari environment.
 How to use:
-    python -m src.test_scripts.test_atari <environment>
+    python -m src.test_scripts.test_regular <environment>
     list of available environments in config.py
 """
 import os
@@ -12,28 +12,25 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 
 # Environment
 import gymnasium as gym  # pylint: disable=unused-import
-import ale_py            # pylint: disable=unused-import
 # Environment Preprocessing
-from stable_baselines3.common.env_util import make_atari_env
-from stable_baselines3.common.vec_env import VecFrameStack
+from stable_baselines3.common.env_util import make_vec_env
 # Model
 from stable_baselines3 import DQN
 
-from src.config import ROOT_PATH, atari_environments
+from src.config import ROOT_PATH, regular_environments
 
 try:
     selected_env = sys.argv[1]
 except IndexError:
     print("Error: No environment selected")
     sys.exit(1)
-if selected_env not in atari_environments:
+if selected_env not in regular_environments:
     print(f"Error: The environment '{selected_env}' doesn't exist.")
-    print(f"Available environments: {", ".join(atari_environments.keys())}")
+    print(f"Available environments: {", ".join(regular_environments.keys())}")
     sys.exit(1)
 
 # Create environment
-vec_env = make_atari_env(atari_environments[selected_env], n_envs=1, seed=0)
-vec_env = VecFrameStack(vec_env, n_stack=4)
+vec_env = make_vec_env(regular_environments[selected_env], n_envs=1, seed=0)
 
 # Load model
 model_path = ROOT_PATH / "Models" / selected_env / "best_model.zip"
