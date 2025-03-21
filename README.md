@@ -1,39 +1,44 @@
-# DQN Training Platform
+# Reinforcement Learning - DQN Training
 
-A comprehensive web-based platform for training and visualizing Deep Q-Network (DQN) agents on various reinforcement learning environments.
+Training and testing scripts for DQN agents in different game environments.
+Includes a web-based platform for tuning the hyperparameters and training the DQN agents on various reinforcement learning environments.
 
 ![Training Process](training_process.png)
 
 ## Features
 
-- 🎮 Train DQN agents on multiple environments:
+- 🎮 Train the DQN agents on multiple environments:
   - Atari games: Breakout, Pacman
   - Regular environments: CartPole, LunarLander
 - ⚙️ Customize hyperparameters or use optimized defaults
 - 📊 Real-time training status monitoring
-- 🎥 Record and replay agent performance videos
+- 🎥 Watch pre-trained agents performace
 - 🐳 Docker support for easy deployment
 
 ## Installation
 
-### Prerequisites
-
-- Python 3.8+
-- CUDA-compatible GPU (recommended)
-- [Docker](https://www.docker.com/get-started) (optional)
+Choose one of the following installation methods:
 
 ### Option 1: Local Installation
 
+**Prerequisites:**
+- Python 3.8+
+- CUDA-compatible GPU (recommended)
+
+Steps:
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Yuval1Gutman/FinalProject
    cd FinalProject
    ```
 
 2. Create and activate a virtual environment:
    ```bash
    python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   # On Windows:
+   .venv\Scripts\activate
+   # On Linux/Mac:
+   # source .venv/bin/activate
    ```
 
 3. Install dependencies:
@@ -41,15 +46,28 @@ A comprehensive web-based platform for training and visualizing Deep Q-Network (
    pip install -r requirements.txt
    ```
 
-### Option 2: Docker
+### Option 2: Docker Installation
 
-Build and run the Docker container:
-```bash
-docker build -t dqn-training .
-docker run -it -p 5000:5000 --gpus all dqn-training
-```
+**Prerequisites:**
+- [Docker](https://www.docker.com/get-started)
+- CUDA-compatible GPU (recommended)
+
+Steps:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Yuval1Gutman/FinalProject
+   cd FinalProject
+   ```
+
+2. Build and run the Docker container:
+   ```bash
+   docker build -t dqn-training .
+   docker run -it -p 5000:5000 --gpus all dqn-training
+   ```
 
 ## Usage
+
+### Web Interface
 
 1. Start the web server:
    ```bash
@@ -60,6 +78,32 @@ docker run -it -p 5000:5000 --gpus all dqn-training
    ```
    http://localhost:5000
    ```
+
+### Manual Training
+
+You can also train agents directly from the command line:
+
+1. For Atari environments (Breakout, Pacman, etc.):
+   ```bash
+   python -m src.train_scripts.train_atari <environment>
+   ```
+   
+   Example:
+   ```bash
+   python -m src.train_scripts.train_atari breakout
+   ```
+
+2. For standard environments (CartPole, LunarLander):
+   ```bash
+   python -m src.train_scripts.train_standard <environment>
+   ```
+
+   Example:
+   ```bash
+   python -m src.train_scripts.train_standard cartpole
+   ```
+
+Available environments are defined in `src.config`. Training hyperparameters can be customized by modifying the respective training scripts.
 
 ## Training Interface
 
@@ -75,44 +119,32 @@ The web interface allows you to:
    - Update intervals
 3. Start and stop training with real-time status updates
 
-![Training Interface](training_process.png)
 
 ## Examples
-
-Check out these examples of trained agents:
 
 <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
   <div style="width: 48%;">
     <h3>Breakout</h3>
     <video width="100%" controls>
-      <source src="src/static/videos/breakout_gameplay.mp4" type="video/mp4">
+      <source src="src/static/videos/breakout.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
   </div>
   <div style="width: 48%;">
     <h3>Pacman</h3>
     <video width="100%" controls>
-      <source src="src/static/videos/pacman_gameplay.mp4" type="video/mp4">
+      <source src="src/static/videos/pacman.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
   </div>
 </div>
 
-<div style="display: flex; justify-content: space-between;">
-  <div style="width: 48%;">
-    <h3>CartPole</h3>
-    <video width="100%" controls>
-      <source src="src/static/videos/cartpole_gameplay.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
-  <div style="width: 48%;">
-    <h3>LunarLander</h3>
-    <video width="100%" controls>
-      <source src="src/static/videos/lunarlander_gameplay.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
+<div style="width: 48%; margin: 0 auto;">
+  <h3>LunarLander</h3>
+  <video width="100%" controls>
+    <source src="src/static/videos/tetris.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 </div>
 
 ## Project Structure
@@ -138,19 +170,3 @@ FinalProject/
 ├── Dockerfile
 ├── README.md
 └── requirements.txt
-
-## Technical Details
-
-### DQN Implementation
-This project uses Stable Baselines3 for the DQN implementation, providing:
-
-- Experience replay buffer
-- Target network for stable training
-- Convolutional neural networks for Atari games
-- MLP networks for regular environments
-
-### Web Interface
-- Built with Flask
-- Bootstrap for responsive design
-- AJAX for real-time training status updates
-
