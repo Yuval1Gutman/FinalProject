@@ -122,33 +122,20 @@ The web interface allows you to:
 
 ## Examples
 
-<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-  <div style="width: 48%;">
-    <h3>Breakout</h3>
-    <video width="100%" controls>
-      <source src="src/static/videos/breakout.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
-  <div style="width: 48%;">
-    <h3>Pacman</h3>
-    <video width="100%" controls>
-      <source src="src/static/videos/pacman.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
-</div>
+### Breakout
+https://github.com/user-attachments/assets/48f52e7b-14a2-44eb-a846-d5030255e896
 
-<div style="width: 48%; margin: 0 auto;">
-  <h3>LunarLander</h3>
-  <video width="100%" controls>
-    <source src="src/static/videos/tetris.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
+### Pacman
+https://github.com/user-attachments/assets/a677759c-7c89-4d44-9cfc-4e70ef331f61
+
+### Tetris
+https://github.com/user-attachments/assets/13b8763c-db99-40c1-95a4-a47bdc1c3574
+
 
 ## Project Structure
 
+
+```
 FinalProject/
 ├── Models/                    # Saved models and training logs
 │   ├── breakout/
@@ -170,3 +157,4 @@ FinalProject/
 ├── Dockerfile
 ├── README.md
 └── requirements.txt
+```
