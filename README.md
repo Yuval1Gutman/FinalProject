@@ -4,6 +4,7 @@ Training and testing scripts for DQN agents in different game environments.
 Includes a web-based platform for tuning the hyperparameters and training the DQN agents on various reinforcement learning environments.
 
 ![Training Process](training_process.png)
+![Web App](web_app.png)
 
 ## Features
 
