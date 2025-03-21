@@ -1,0 +1,266 @@
+body {
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.header {
+    margin-bottom: 20px;
+}
+.header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+.header p {
+    color: #6c757d;
+    margin-bottom: 0;
+}
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    margin-bottom: 20px;
+    background-color: white;
+}
+.card-header {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    background-color: white;
+    border-bottom: 1px solid #dee2e6;
+}
+.card-header .bi {
+    margin-right: 10px;
+    color: #212529;
+}
+.card-body {
+    padding: 1.5rem;
+}
+.nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 20px;
+}
+.nav-tabs .nav-link {
+    border: none;
+    color: #495057;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    margin-right: 10px;
+}
+.nav-tabs .nav-link.active {
+    color: #000;
+    background-color: transparent;
+    border-bottom: 2px solid #000;
+}
+/* Parameter styles */
+.parameter-row {
+    margin-bottom: 1.5rem;
+}
+.parameter-label {
+    font-weight: 500;
+    color: #212529;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+.parameter-controls {
+    display: flex;
+    align-items: center;
+}
+.parameter-slider {
+    flex-grow: 1;
+    margin-right: 15px;
+    --value-percent: 50%;
+    background: linear-gradient(to right, #0d6efd var(--value-percent), #e9ecef var(--value-percent));
+    height: 8px;
+}
+.parameter-value {
+    width: 100px;
+}
+.parameter-value input {
+    text-align: center;
+    border: 1px solid #dee2e6;
+    width: 80px;
+    padding: 0.25rem;
+}
+/* Custom Range Slider Styling */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: #e9ecef;
+    border-radius: 5px;
+    outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border: 2px solid #212529;
+    border-radius: 50%;
+    cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border: 2px solid #212529;
+    border-radius: 50%;
+    cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 4px;
+    background: linear-gradient(to right, #212529 var(--value-percent, 0%), #e9ecef var(--value-percent, 0%));
+    border-radius: 5px;
+}
+input[type="range"]::-moz-range-track {
+    height: 4px;
+    background: #e9ecef;
+    border-radius: 5px;
+}
+input[type="range"]::-moz-range-progress {
+    height: 4px;
+    background: #212529;
+    border-radius: 5px;
+}
+/* Button styles */
+.btn-primary {
+    background-color: #212529;
+    border-color: #212529;
+}
+.btn-primary:hover {
+    background-color: #000;
+    border-color: #000;
+}
+.btn-outline-secondary {
+    color: #212529;
+    border-color: #dee2e6;
+}
+.btn-outline-secondary:hover {
+    background-color: #f8f9fa;
+    color: #000;
+}
+/* Input fields */
+.form-control {
+    border: 1px solid #dee2e6;
+}
+/* Spinner button controls */
+.form-control::-webkit-inner-spin-button {
+    opacity: 1;
+}
+
+/* Remove up/down arrows from number inputs */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+/* Enhanced toggle switch styling */
+.toggle-container {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px 15px;
+    border: 1px solid #dee2e6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.toggle-container .form-check-input {
+    width: 3em;
+    height: 1.5em;
+    margin-right: 10px;
+}
+
+.toggle-container .form-check-label {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-container .form-check-label i {
+    margin-right: 8px;
+    color: #0d6efd;
+}
+
+/* Video Gallery Styles */
+.video-card {
+    transition: transform 0.2s;
+    height: 100%;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.video-thumbnail {
+    height: 160px;
+    background-color: #343a40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.thumbnail-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s;
+    cursor: pointer; /* Add cursor pointer to indicate it's clickable */
+}
+
+.play-overlay i {
+    font-size: 3rem;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.video-card:hover .play-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.video-card:hover .play-overlay i {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Ensure consistent height for video cards */
+.video-card .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.video-card .card-title {
+    margin-bottom: auto;
+}

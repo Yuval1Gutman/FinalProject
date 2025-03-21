@@ -1,14 +1,11 @@
 """
-Test the trained model on an Atari environment.
+Test the trained model on a regular gymnasium environment.
 How to use:
     python -m src.test_scripts.test_regular <environment>
     list of available environments in config.py
 """
 import os
 import sys
-
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 # Environment
 import gymnasium as gym  # pylint: disable=unused-import
@@ -17,7 +14,9 @@ from stable_baselines3.common.env_util import make_vec_env
 # Model
 from stable_baselines3 import DQN
 
-from src.config import ROOT_PATH, regular_environments
+# Add the project root to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+from src.config import ROOT_PATH, regular_environments  # nopep8
 
 try:
     selected_env = sys.argv[1]

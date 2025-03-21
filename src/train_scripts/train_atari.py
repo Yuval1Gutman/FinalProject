@@ -9,9 +9,6 @@ For manual training, run the following command:
 import os
 import sys
 
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-
 # Environment
 import gymnasium as gym  # pylint: disable=unused-import
 import ale_py            # pylint: disable=unused-import
@@ -22,7 +19,9 @@ from stable_baselines3.common.vec_env import VecFrameStack
 from stable_baselines3 import DQN
 from stable_baselines3.common.callbacks import EvalCallback
 
-from src.config import ROOT_PATH, atari_environments
+# Add the project root to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+from src.config import ROOT_PATH, atari_environments  # nopep8
 
 
 def train_atari(environment, hyperparameters=None, verbose=0):
@@ -30,7 +29,7 @@ def train_atari(environment, hyperparameters=None, verbose=0):
     Train a DQN agent on an Atari game.
 
     Args:
-        environment (str): The game that the model trains on. List of available games in README.md
+        environment (str): The game that the model trains on. List of available games in config.py
         hyperparameters (dict): Dictionary containing hyperparameters for training.
             Supported parameters:
             - learning_rate (float): Learning rate for the optimizer

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DQN Training</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1>DQN Training</h1>
+            <p>Configure and train a Deep Q-Network agent</p>
+        </div>
+        
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="configuration-tab" data-bs-toggle="tab" data-bs-target="#configuration" type="button" role="tab" aria-controls="configuration" aria-selected="true">Configuration</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="examples-tab" data-bs-toggle="tab" data-bs-target="#examples" type="button" role="tab" aria-controls="examples" aria-selected="false">Video Examples</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="myTabContent">
+            <!-- Configuration Tab -->
+            <div class="tab-pane fade show active" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
+                <form id="configForm">
+                    <div class="row">
+                        <!-- Training Configuration Card -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="bi bi-gear-fill"></i> Training Configuration
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="environment" class="form-label">Environment</label>
+                                        <select id="environment" name="environment" class="form-select">
+                                            {% for env in environments %}
+                                            <option value="{{ env }}">{{ env.title() }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="num_episodes" class="form-label">Number of Episodes</label>
+                                        <div class="input-group">
+                                            <input type="number" id="num_episodes" name="num_episodes" class="form-control" value="100000" min="1000" max="10000000" step="1000">
+                                            <button class="btn btn-outline-secondary" type="button" onclick="adjustValue('num_episodes', -1000)">-</button>
+                                            <button class="btn btn-outline-secondary" type="button" onclick="adjustValue('num_episodes', 1000)">+</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="num_episodes" class="form-label">Number of Episodes</label>
+                                        <div class="input-group">
+                                            <input type="number" id="num_episodes" name="num_episodes" class="form-control" value="100000" min="1000" max="10000000" step="1000">
+                                            <button class="btn btn-outline-secondary" type="button" onclick="adjustValue('num_episodes', -1000)">-</button>
+                                            <button class="btn btn-outline-secondary" type="button" onclick="adjustValue('num_episodes', 1000)">+</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="num_episodes" class="form-label">Number of Episodes</label>
+                                        <div class="input-group">
+                                            <input type="number" id="num_episodes" name="num_episodes" class="form-control" value="100000" min="1000" max="10000000" step="1000">
+                                            <button class="btn btn-outline-secondary" type="button" onclick="adjustValue('num_episodes', -1000)">-</button>
+                                            <button class="btn btn-outline-secondary" type="button" onclick="adjustValue('num_episodes', 1000)">+</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="num_episodes" class="form-label">Number of Episodes</label>
+                                        <div class="input-group">
+                                            <input type="number" id="num_episodes" name="num_episodes" class="form-control" value="100000" min="1000" max="10000000" step="1000">
+                                            <button class="btn btn-outline-secondary" type="button" onclick="adjustValue('num_episodes', -1000)">-</button>
+                                            <button class="btn btn-outline-secondary" type="button" onclick="adjustValue('num_episodes', 1000)">+</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="toggle-container">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="hyperparameterToggle" name="hyperparameterToggle" checked>
+                                            <label class="form-check-label" for="hyperparameterToggle">
+                                                <i class="bi bi-sliders"></i> Use Default Hyperparameters
+                                            </label>
+                                        </div>
+                                        <span class="badge bg-info">Recommended</span>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2 mb-4">
+                                        <button type="button" id="startTraining" class="btn btn-primary btn-lg">
+                                            <i class="bi bi-play-fill"></i> Start Training
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="card bg-light">
+                                        <div class="card-body d-flex justify-content-between align-items-center">
+                                            <div id="trainingStatus" class="status-indicator">
+                                                <span class="badge bg-secondary">Not Training</span>
+                                            </div>
+                                            <button id="stopTraining" class="btn btn-danger" disabled>
+                                                <i class="bi bi-stop-fill"></i> Stop Training
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- DQN Hyperparameters Card -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="bi bi-sliders"></i> DQN Hyperparameters
+                                </div>
+                                <div class="card-body dqn-hyperparameters" style="opacity: 0.5; pointer-events: none;">
+                                    {% for param, details in hyperparameters.items() %}
+                                    <div class="parameter-row">
+                                        <div class="parameter-label">{{ param.replace('_', ' ').title() }}</div>
+                                        <div class="parameter-controls">
+                                            <input type="range" id="{{ param }}_slider" class="form-range parameter-slider" 
+                                                   min="{{ details.min }}" max="{{ details.max }}" 
+                                                   step="{{ details.get('step', (details.max - details.min) / 10) }}"
+                                                   value="{{ details.default }}">
+                                            <div class="parameter-value">
+                                                <input type="number" id="{{ param }}" name="{{ param }}" 
+                                                       class="form-control" value="{{ details.default }}" 
+                                                       min="{{ details.min }}" max="{{ details.max }}" 
+                                                       step="{{ details.get('step', (details.max - details.min) / 10) }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Video Examples Tab -->
+            <div class="tab-pane fade" id="examples" role="tabpanel" aria-labelledby="examples-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="bi bi-collection-play"></i> Trained Agent Examples
+                    </div>
+                    <div class="card-body">
+                        <div class="row" id="videoGallery">
+                            <div class="text-center py-5">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Loading videos...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="videoModalLabel">Video Example</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <video id="videoPlayer" class="w-100" controls>
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

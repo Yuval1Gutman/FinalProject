@@ -7,9 +7,6 @@ How to use:
 import os
 import sys
 
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-
 # Environment
 import gymnasium as gym  # pylint: disable=unused-import
 import ale_py            # pylint: disable=unused-import
@@ -19,7 +16,9 @@ from stable_baselines3.common.vec_env import VecFrameStack
 # Model
 from stable_baselines3 import DQN
 
-from src.config import ROOT_PATH, atari_environments
+# Add the project root to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+from src.config import ROOT_PATH, atari_environments  # nopep8
 
 try:
     selected_env = sys.argv[1]
