@@ -4,7 +4,8 @@ ROOT_PATH = Path(__file__).resolve().parents[1]
 
 atari_environments = {
     "breakout": "BreakoutNoFrameskip-v4",
-    "pacman": "ALE/Pacman-v5"
+    "pacman": "ALE/Pacman-v5",
+    "freeway": "ALE/Freeway-v5"
 }
 regular_environments = {
     "cartpole": "CartPole-v1",
@@ -15,7 +16,7 @@ param_details = {
     'learning_rate':          {'is_float': 1, 'default': 0.001,  'min': 0.0001, 'max': 0.1,     'step': 0.0001},
     'gamma':                  {'is_float': 1, 'default': 0.99,   'min': 0.8,    'max': 1.0,     'step': 0.01},
     'exploration_fraction':   {'is_float': 1, 'default': 0.1,    'min': 0.01,   'max': 1.0,     'step': 0.01},
-    'epsilon_end':            {'is_float': 1, 'default': 0.01,   'min': 0.001,  'max': 0.1,     'step': 0.001},
+    'exploration_final_eps':  {'is_float': 1, 'default': 0.01,   'min': 0.001,  'max': 0.1,     'step': 0.001},
     'learning_starts':        {'is_float': 0, 'default': 1000,   'min': 100,    'max': 10_000,  'step': 100},
     'buffer_size':            {'is_float': 0, 'default': 50_000, 'min': 1_000,  'max': 100_000, 'step': 1000},
     'batch_size':             {'is_float': 0, 'default': 32,     'min': 16,     'max': 256,     'step': 16},

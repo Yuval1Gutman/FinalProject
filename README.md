@@ -1,4 +1,4 @@
-# Reinforcement Learning - DQN Training
+# Reinforcement Learning - DQN Agent
 
 Training and testing scripts for DQN agents in different game environments.
 Includes a web-based platform for tuning the hyperparameters and training the DQN agents on various reinforcement learning environments.

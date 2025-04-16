@@ -5,11 +5,10 @@ torchvision
 torchaudio
 
 # DQN Agent
-stable-baselines3[extra]==2.5.0
+stable-baselines3[extra]==2.6.0
 
 # Environments
-gymnasium[atari,accept-rom-license]==1.0.0
+gymnasium[atari,accept-rom-license]==1.1.0
 
 # Web App
-flask==2.3.3
-requests==2.32.3
+flask==3.1.0

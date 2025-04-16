@@ -145,4 +145,4 @@ if __name__ == "__main__":
         print(f"Available environments: {", ".join(atari_environments.keys())}")
         sys.exit(2)
 
-    train_atari(selected_env)
+    train_atari(selected_env, verbose=1)
