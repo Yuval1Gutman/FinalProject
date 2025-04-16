@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'learning_rate',
         'gamma',
         'exploration_fraction',
-        'epsilon_end',
+        'exploration_final_eps',
         'learning_starts',
         'buffer_size',
         'batch_size',
