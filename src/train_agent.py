@@ -18,6 +18,7 @@ from stable_baselines3.common.vec_env import VecFrameStack
 # Model
 from stable_baselines3 import DQN
 from stable_baselines3.common.callbacks import EvalCallback
+import torch
 
 from config import ROOT_PATH, env_list, atari_environments, regular_environments
 
@@ -86,6 +87,11 @@ def train_agent(environment, hyperparameters=None, verbose=0):
     logs_path = environment_path / "dqn_logs"
     os.makedirs(logs_path, exist_ok=True)
 
+    # Fallback to CPU if CUDA isn't available
+    if params['device'] == 'cuda' and not torch.cuda.is_available():
+        params['device'] = 'cpu'
+
+    # Print training details
     if verbose:
         print(f"Starting DQN agent training on {environment} with the following parameters:")
         for key, value in params.items():
