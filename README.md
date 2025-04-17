@@ -9,8 +9,8 @@ Includes a web-based platform for tuning the hyperparameters and training the DQ
 ## Features
 
 - 🎮 Train the DQN agents on multiple environments:
-  - Atari games: Breakout, Pacman
-  - Regular environments: CartPole, LunarLander
+  - Atari games: Breakout, Pacman, DonkeyKong
+  - Regular environments: CartPole, LunarLander, MountainCar
 - ⚙️ Customize hyperparameters or use optimized defaults
 - 📊 Real-time training status monitoring
 - 🎥 Watch pre-trained agents performace
@@ -23,7 +23,7 @@ Choose one of the following installation methods:
 ### Option 1: Local Installation
 
 **Prerequisites:**
-- Python 3.8+
+- Python 3.9+
 - CUDA-compatible GPU (recommended)
 
 Steps:
@@ -72,7 +72,7 @@ Steps:
 
 1. Start the web server:
    ```bash
-   python -m src.app
+   flask run
    ```
 
 2. Open your browser and navigate to:
@@ -83,34 +83,22 @@ Steps:
 ### Manual Training
 
 You can also train agents directly from the command line:
+```bash
+python src/train_agent <environment>
+```
 
-1. For Atari environments (Breakout, Pacman, etc.):
-   ```bash
-   python -m src.train_scripts.train_atari <environment>
-   ```
-   
-   Example:
-   ```bash
-   python -m src.train_scripts.train_atari breakout
-   ```
+Example:
+```bash
+python src/train_agent breakout
+```
 
-2. For standard environments (CartPole, LunarLander):
-   ```bash
-   python -m src.train_scripts.train_standard <environment>
-   ```
-
-   Example:
-   ```bash
-   python -m src.train_scripts.train_standard cartpole
-   ```
-
-Available environments are defined in `src.config`. Training hyperparameters can be customized by modifying the respective training scripts.
+Available environments are defined in `src/config`. Training hyperparameters can be customized by modifying the training script.
 
 ## Training Interface
 
 The web interface allows you to:
 
-1. Select an environment (Breakout, Pacman, CartPole, LunarLander)
+1. Select an environment (Breakout, Pacman, DonkeyKong, CartPole, LunarLander, MountainCar)
 2. Use default hyperparameters or customize:
    - Learning rate
    - Discount factor (gamma)
@@ -141,21 +129,23 @@ FinalProject/
 ├── Models/                    # Saved models and training logs
 │   ├── breakout/
 │   ├── pacman/
-│   ├── cartpole/
-│   └── lunarlander/
+│   ├── teris/
+│   └── graphs/                # Graphs of all 3 games to load together
 ├── src/
 │   ├── static/
 │   │   ├── css/
 │   │   ├── js/
 │   │   └── videos/            # Recorded agent performances
 │   ├── templates/
-│   ├── test_scripts/          # Testing and recording scripts
-│   ├── train_scripts/         # Training implementations
+│   ├── train_agent.py         # Training implementation
+│   ├── test_agent.py          # Testing script
+│   ├── record_agent.py        # Recording script
 │   ├── app.py                 # Flask web application
 │   └── config.py
+├── .flaskenv                  # Flask environment variables
+├── requirements.txt
+├── Dockerfile
 ├── .dockerignore
 ├── .gitignore
-├── Dockerfile
-├── README.md
-└── requirements.txt
+└── README.md
 ```

@@ -5,11 +5,12 @@ ROOT_PATH = Path(__file__).resolve().parents[1]
 atari_environments = {
     "breakout": "BreakoutNoFrameskip-v4",
     "pacman": "ALE/Pacman-v5",
-    "freeway": "ALE/Freeway-v5"
+    "donkeykong": "ALE/DonkeyKong-v5"
 }
 regular_environments = {
     "cartpole": "CartPole-v1",
-    "lunarlander": "LunarLander-v3"
+    "lunarlander": "LunarLander-v3",
+    "mountaincar": "MountainCar-v0"
 }
 env_list = list(atari_environments.keys()) + list(regular_environments.keys())
 
