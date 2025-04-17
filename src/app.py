@@ -1,26 +1,20 @@
 import os
-import sys
 import multiprocessing
 
 from flask import Flask, render_template, request, jsonify
 
-from train_scripts.train_atari import train_atari
-from train_scripts.train_regular import train_regular
-from src.config import atari_environments, regular_environments, param_details
-
-sys.dont_write_bytecode = True
+from train_agent import train_agent
+from config import param_details, env_list, atari_environments, regular_environments
 
 
 app = Flask(__name__)
 
-# Global variables
-ENVIRONMENTS = list(atari_environments.keys()) + list(regular_environments.keys())
 training_process = None
 
 
 @app.route("/")
 def index():
-    return render_template("index.html", environments=ENVIRONMENTS, hyperparameters=param_details)
+    return render_template("index.html", environments=env_list, hyperparameters=param_details)
 
 
 @app.route('/start_training', methods=['POST'])
@@ -58,14 +52,9 @@ def start_training():
         training_process.join()
 
     # Create and start the appropriate training process
-    if environment in atari_environments:
+    if environment in env_list:
         training_process = multiprocessing.Process(
-            target=train_atari,
-            args=(environment, hyperparameters, 1)
-        )
-    elif environment in regular_environments:
-        training_process = multiprocessing.Process(
-            target=train_regular,
+            target=train_agent,
             args=(environment, hyperparameters, 1)
         )
     else:
@@ -131,4 +120,4 @@ def list_videos():
 
 if __name__ == "__main__":
     multiprocessing.set_start_method('spawn', force=True)
-    app.run(debug=True, use_reloader=False)
+    app.run()

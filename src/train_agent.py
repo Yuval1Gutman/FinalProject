@@ -1,8 +1,8 @@
 """
-Train a DQN agent on an Atari environment.
+Train a DQN agent on an Atari/Regular environment.
 Used by app.py to train the model.
 For manual training, run the following command:
-    python -m src.train_scripts.train_atari <environment>
+    python src/train_agent.py <environment>
     list of available environments in config.py
 """
 
@@ -10,23 +10,21 @@ import os
 import sys
 
 # Environment
-import gymnasium as gym  # pylint: disable=unused-import
-import ale_py            # pylint: disable=unused-import
+import gymnasium as gym
+import ale_py
 # Environment Preprocessing
-from stable_baselines3.common.env_util import make_atari_env
+from stable_baselines3.common.env_util import make_vec_env, make_atari_env
 from stable_baselines3.common.vec_env import VecFrameStack
 # Model
 from stable_baselines3 import DQN
 from stable_baselines3.common.callbacks import EvalCallback
 
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-from src.config import ROOT_PATH, atari_environments  # nopep8
+from config import ROOT_PATH, env_list, atari_environments, regular_environments
 
 
-def train_atari(environment, hyperparameters=None, verbose=0):
+def train_agent(environment, hyperparameters=None, verbose=0):
     """
-    Train a DQN agent on an Atari game.
+    Train a DQN agent on an Atari/Regular game.
 
     Args:
         environment (str): The game that the model trains on. List of available games in config.py
@@ -48,7 +46,7 @@ def train_atari(environment, hyperparameters=None, verbose=0):
             - device (str): Device to use ('cpu' or 'cuda')
 
     Returns:
-        str: Path to the saved model
+        None: None
     """
     # Set default hyperparameters
     params = {
@@ -74,23 +72,25 @@ def train_atari(environment, hyperparameters=None, verbose=0):
     if hyperparameters:
         params.update(hyperparameters)
 
-    if environment not in atari_environments:
+    # Create environment and preprocess based on environment type
+    if environment in atari_environments:
+        vec_env = make_atari_env(atari_environments[environment], n_envs=params['n_envs'], seed=0)
+        vec_env = VecFrameStack(vec_env, n_stack=4)
+    elif environment in regular_environments:
+        vec_env = make_vec_env(regular_environments[environment], n_envs=params['n_envs'], seed=0)
+    else:
         raise KeyError
-
-    if verbose:
-        print(f"Starting DQN agent training on {environment} with the following parameters:")
-        for key, value in params.items():
-            print(f"{key}: {value}")
-        print("-" * 50)
 
     # Create environment directory
     environment_path = ROOT_PATH / "Models" / environment
     logs_path = environment_path / "dqn_logs"
     os.makedirs(logs_path, exist_ok=True)
 
-    # Create environment
-    vec_env = make_atari_env(atari_environments[environment], n_envs=params['n_envs'], seed=0)
-    vec_env = VecFrameStack(vec_env, n_stack=4)
+    if verbose:
+        print(f"Starting DQN agent training on {environment} with the following parameters:")
+        for key, value in params.items():
+            print(f"{key}: {value}")
+        print("-" * 50)
 
     # Create model
     model = DQN(
@@ -135,14 +135,16 @@ def train_atari(environment, hyperparameters=None, verbose=0):
 
 
 if __name__ == "__main__":
+    # Load input
     try:
         selected_env = sys.argv[1]
     except IndexError:
         print("Error: No environment selected")
         sys.exit(1)
-    if selected_env not in atari_environments:
+
+    if selected_env not in env_list:
         print(f"Error: The environment '{selected_env}' doesn't exist.")
-        print(f"Available environments: {", ".join(atari_environments.keys())}")
+        print(f"Available environments: {", ".join(env_list)}")
         sys.exit(2)
 
-    train_atari(selected_env, verbose=1)
+    train_agent(selected_env, verbose=1)

@@ -11,6 +11,7 @@ regular_environments = {
     "cartpole": "CartPole-v1",
     "lunarlander": "LunarLander-v3"
 }
+env_list = list(atari_environments.keys()) + list(regular_environments.keys())
 
 param_details = {
     'learning_rate':          {'is_float': 1, 'default': 0.001,  'min': 0.0001, 'max': 0.1,     'step': 0.0001},
