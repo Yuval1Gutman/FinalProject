@@ -2,7 +2,7 @@ from pathlib import Path
 
 ROOT_PATH = Path(__file__).resolve().parents[1]
 
-atari_environments = {
+pixel_environments = {
     "breakout": "BreakoutNoFrameskip-v4",
     "pacman": "ALE/Pacman-v5",
     "donkeykong": "ALE/DonkeyKong-v5"
@@ -12,7 +12,7 @@ regular_environments = {
     "lunarlander": "LunarLander-v3",
     "mountaincar": "MountainCar-v0"
 }
-env_list = list(atari_environments.keys()) + list(regular_environments.keys())
+env_list = list(pixel_environments.keys()) + list(regular_environments.keys())
 
 param_details = {
     'learning_rate':          {'is_float': 1, 'default': 0.001,  'min': 0.0001, 'max': 0.1,     'step': 0.0001},

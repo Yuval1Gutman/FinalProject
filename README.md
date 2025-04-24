@@ -84,15 +84,15 @@ Steps:
 
 You can also train agents directly from the command line:
 ```bash
-python src/train_agent <environment>
+python src/train_agent.py <environment>
 ```
 
 Example:
 ```bash
-python src/train_agent breakout
+python src/train_agent.py breakout
 ```
 
-Available environments are defined in `src/config`. Training hyperparameters can be customized by modifying the training script.
+Available environments are defined in `src/config.py`. Training hyperparameters can be customized by modifying the training script.
 
 ## Training Interface
 

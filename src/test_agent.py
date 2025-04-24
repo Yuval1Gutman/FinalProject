@@ -1,5 +1,5 @@
 """
-Test the trained model on an Atari/Regular environment.
+Test the trained model on a Pixel/Regular environment.
 How to use:
     python src/test_agent.py <environment>
     list of available environments in src/config.py
@@ -16,7 +16,7 @@ from stable_baselines3.common.vec_env import VecFrameStack
 # Model
 from stable_baselines3 import DQN
 
-from config import ROOT_PATH, env_list, atari_environments, regular_environments
+from config import ROOT_PATH, env_list, pixel_environments, regular_environments
 
 
 # Load input
@@ -27,8 +27,8 @@ except IndexError:
     sys.exit(1)
 
 # Create environment and preprocess based on environment type
-if selected_env in atari_environments:
-    vec_env = make_atari_env(atari_environments[selected_env], n_envs=1, seed=0)
+if selected_env in pixel_environments:
+    vec_env = make_atari_env(pixel_environments[selected_env], n_envs=1, seed=0)
     vec_env = VecFrameStack(vec_env, n_stack=4)
 elif selected_env in regular_environments:
     vec_env = make_vec_env(regular_environments[selected_env], n_envs=1, seed=0)

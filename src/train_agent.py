@@ -1,5 +1,5 @@
 """
-Train a DQN agent on an Atari/Regular environment.
+Train a DQN agent on a Pixel/Regular environment.
 Used by app.py to train the model.
 For manual training, run the following command:
     python src/train_agent.py <environment>
@@ -20,12 +20,12 @@ from stable_baselines3 import DQN
 from stable_baselines3.common.callbacks import EvalCallback
 import torch
 
-from config import ROOT_PATH, env_list, atari_environments, regular_environments
+from config import ROOT_PATH, env_list, pixel_environments, regular_environments
 
 
 def train_agent(environment, hyperparameters=None, verbose=0):
     """
-    Train a DQN agent on an Atari/Regular game.
+    Train a DQN agent on a Pixel/Regular game.
 
     Args:
         environment (str): The game that the model trains on. List of available games in config.py
@@ -74,8 +74,8 @@ def train_agent(environment, hyperparameters=None, verbose=0):
         params.update(hyperparameters)
 
     # Create environment and preprocess based on environment type
-    if environment in atari_environments:
-        vec_env = make_atari_env(atari_environments[environment], n_envs=params['n_envs'], seed=0)
+    if environment in pixel_environments:
+        vec_env = make_atari_env(pixel_environments[environment], n_envs=params['n_envs'], seed=0)
         vec_env = VecFrameStack(vec_env, n_stack=4)
     elif environment in regular_environments:
         vec_env = make_vec_env(regular_environments[environment], n_envs=params['n_envs'], seed=0)
@@ -90,6 +90,8 @@ def train_agent(environment, hyperparameters=None, verbose=0):
     # Fallback to CPU if CUDA isn't available
     if params['device'] == 'cuda' and not torch.cuda.is_available():
         params['device'] = 'cpu'
+        if verbose:
+            print("CUDA not available, using CPU")
 
     # Print training details
     if verbose:

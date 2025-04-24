@@ -4,7 +4,7 @@ import multiprocessing
 from flask import Flask, render_template, request, jsonify
 
 from train_agent import train_agent
-from config import param_details, env_list, atari_environments, regular_environments
+from config import param_details, env_list
 
 
 app = Flask(__name__)
