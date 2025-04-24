@@ -10,6 +10,7 @@ import sys
 # Environment
 import gymnasium as gym
 import ale_py
+from tetris_gymnasium.envs import Tetris
 # Environment Preprocessing
 from stable_baselines3.common.env_util import make_vec_env, make_atari_env
 from stable_baselines3.common.vec_env import VecFrameStack

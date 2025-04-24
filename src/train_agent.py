@@ -12,6 +12,7 @@ import sys
 # Environment
 import gymnasium as gym
 import ale_py
+from tetris_gymnasium.envs import Tetris
 # Environment Preprocessing
 from stable_baselines3.common.env_util import make_vec_env, make_atari_env
 from stable_baselines3.common.vec_env import VecFrameStack
@@ -77,8 +78,10 @@ def train_agent(environment, hyperparameters=None, verbose=0):
     if environment in pixel_environments:
         vec_env = make_atari_env(pixel_environments[environment], n_envs=params['n_envs'], seed=0)
         vec_env = VecFrameStack(vec_env, n_stack=4)
+        params['policy'] = "CnnPolicy"
     elif environment in regular_environments:
         vec_env = make_vec_env(regular_environments[environment], n_envs=params['n_envs'], seed=0)
+        params['policy'] = "MultiInputPolicy"
     else:
         raise KeyError
 
@@ -102,7 +105,7 @@ def train_agent(environment, hyperparameters=None, verbose=0):
 
     # Create model
     model = DQN(
-        "CnnPolicy",
+        params['policy'],
         vec_env,
         learning_rate=params['learning_rate'],
         gamma=params['gamma'],

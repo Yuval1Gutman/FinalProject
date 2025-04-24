@@ -9,6 +9,7 @@ stable-baselines3[extra]==2.6.0
 
 # Environments
 gymnasium[atari,accept-rom-license]==1.1.0
+tetris_gymnasium==0.3.0
 
 # Web App
 flask==3.1.0

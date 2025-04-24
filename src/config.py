@@ -8,6 +8,7 @@ pixel_environments = {
     "donkeykong": "ALE/DonkeyKong-v5"
 }
 regular_environments = {
+    "tetris": "tetris_gymnasium/Tetris",
     "cartpole": "CartPole-v1",
     "lunarlander": "LunarLander-v3",
     "mountaincar": "MountainCar-v0"
