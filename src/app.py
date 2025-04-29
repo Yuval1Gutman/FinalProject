@@ -1,3 +1,9 @@
+"""
+A Flask web app.
+Opens a site at port 5000, visable through the domain http://localhost:5000
+Used by running the file or the command `flask run`
+"""
+
 import os
 import multiprocessing
 
@@ -8,17 +14,20 @@ from config import param_details, env_list
 
 
 app = Flask(__name__)
-
 training_process = None
 
 
 @app.route("/")
 def index():
+    """
+    Load the main page of the app
+    """
     return render_template("index.html", environments=env_list, hyperparameters=param_details)
 
 
 @app.route('/start_training', methods=['POST'])
 def start_training():
+    """Start a training process based on the user's selections"""
     global training_process
 
     # Get environment and hyperparameters from form
@@ -60,12 +69,14 @@ def start_training():
     else:
         return jsonify({"status": "error", "message": "Invalid environment"}), 400
 
+    # Start training
     training_process.start()
     return jsonify({"status": "started"})
 
 
 @app.route('/stop_training', methods=['POST'])
 def stop_training():
+    """Stop an existing training process"""
     global training_process
 
     if training_process is not None and training_process.is_alive():
@@ -90,6 +101,7 @@ def stop_training():
 
 @app.route('/training_status', methods=['GET'])
 def training_status():
+    """Check current status of training process"""
     global training_process
 
     # Check if training is running
@@ -102,7 +114,7 @@ def training_status():
 
 @app.route('/videos')
 def list_videos():
-    """List all available video examples in the videos directory."""
+    """List all available videos in the videos directory."""
     videos_dir = os.path.join(app.static_folder, 'videos')
 
     # Create videos directory if it doesn't exist
@@ -119,5 +131,6 @@ def list_videos():
 
 
 if __name__ == "__main__":
+    # Start the web app
     multiprocessing.set_start_method('spawn', force=True)
     app.run()

@@ -26,7 +26,7 @@ from config import ROOT_PATH, env_list, pixel_environments, regular_environments
 
 def train_agent(environment, hyperparameters=None, verbose=0):
     """
-    Train a DQN agent on a Pixel/Regular game.
+    Train a DQN agent on a pixel/regular game.
 
     Args:
         environment (str): The game that the model trains on. List of available games in config.py
@@ -46,6 +46,7 @@ def train_agent(environment, hyperparameters=None, verbose=0):
             - total_timesteps (int): Total number of timesteps to train
             - policy_kwargs (dict): Additional policy network parameters
             - device (str): Device to use ('cpu' or 'cuda')
+        verbose (int): 1 to log info to console, 0 otherwise
 
     Returns:
         None: None
@@ -152,7 +153,6 @@ if __name__ == "__main__":
     except IndexError:
         print("Error: No environment selected")
         sys.exit(1)
-
     if selected_env not in env_list:
         print(f"Error: The environment '{selected_env}' doesn't exist.")
         print(f"Available environments: {", ".join(env_list)}")

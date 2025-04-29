@@ -1,7 +1,13 @@
+"""
+Defines important variables used in the project
+"""
+
 from pathlib import Path
 
+# Root path of project. used to load and save files
 ROOT_PATH = Path(__file__).resolve().parents[1]
 
+# Dictionaries mapping available game names to their environment IDs
 pixel_environments = {
     "breakout": "BreakoutNoFrameskip-v4",
     "pacman": "ALE/Pacman-v5",
@@ -13,8 +19,10 @@ regular_environments = {
     "lunarlander": "LunarLander-v3",
     "mountaincar": "MountainCar-v0"
 }
+# List of all available game environments
 env_list = list(pixel_environments.keys()) + list(regular_environments.keys())
 
+# Hyperparameter details for tuning in web app
 param_details = {
     'learning_rate':          {'is_float': 1, 'default': 0.001,  'min': 0.0001, 'max': 0.1,     'step': 0.0001},
     'gamma':                  {'is_float': 1, 'default': 0.99,   'min': 0.8,    'max': 1.0,     'step': 0.01},

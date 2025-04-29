@@ -9,8 +9,8 @@ Includes a web-based platform for tuning the hyperparameters and training the DQ
 ## Features
 
 - 🎮 Train the DQN agents on multiple environments:
-  - Atari games: Breakout, Pacman, DonkeyKong
-  - Regular environments: CartPole, LunarLander, MountainCar
+  - Pixel games: Breakout, Pacman, DonkeyKong
+  - Regular environments: Tetris, CartPole, LunarLander, MountainCar
 - ⚙️ Customize hyperparameters or use optimized defaults
 - 📊 Real-time training status monitoring
 - 🎥 Watch pre-trained agents performace
@@ -98,7 +98,7 @@ Available environments are defined in `src/config.py`. Training hyperparameters 
 
 The web interface allows you to:
 
-1. Select an environment (Breakout, Pacman, DonkeyKong, CartPole, LunarLander, MountainCar)
+1. Select an environment (Breakout, Pacman, Tetris, DonkeyKong, CartPole, LunarLander, MountainCar)
 2. Use default hyperparameters or customize:
    - Learning rate
    - Discount factor (gamma)
