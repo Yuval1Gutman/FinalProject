@@ -64,7 +64,7 @@ if __name__ == "__main__":
         sys.exit(1)
     if selected_env not in env_list:
         print(f"Error: The environment '{selected_env}' doesn't exist.")
-        print(f"Available environments: {", ".join(env_list)}")
+        print(f"Available environments: {', '.join(env_list)}")
         sys.exit(2)
 
     test_agent(selected_env)
