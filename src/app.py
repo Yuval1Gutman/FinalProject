@@ -133,4 +133,4 @@ def list_videos():
 if __name__ == "__main__":
     # Start the web app
     multiprocessing.set_start_method('spawn', force=True)
-    app.run()
+    app.run(host="0.0.0.0")
