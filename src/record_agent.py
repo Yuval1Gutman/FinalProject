@@ -40,7 +40,7 @@ def record_agent(environment, video_length_seconds=30, video_fps=30):
         vec_env = make_vec_env(regular_environments[environment], n_envs=1, seed=0)
     else:
         print(f"Error: The environment '{environment}' doesn't exist.")
-        print(f"Available environments: {", ".join(env_list)}")
+        print(f"Available environments: {', '.join(env_list)}")
         sys.exit(2)
 
     # Create video directory if it doesn't exist
