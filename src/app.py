@@ -33,6 +33,10 @@ def start_training():
     # Get environment and hyperparameters from form
     environment = request.form.get('environment', 'cartpole')
 
+    # Get number of timestamps from form
+    num_timestamps = request.form.get('num_timestamps', '1000000')
+    hyperparameters['total_timestamps'] = int(num_timestamps)
+
     # Check if hyperparameter tuning is enabled
     use_default_hyperparameters = request.form.get('hyperparameterToggle') == 'on'
 
@@ -42,11 +46,6 @@ def start_training():
     else:
         # Update the hyperparameters extraction from the request
         hyperparameters = {key: request.form.get(key, value['default']) for key, value in param_details.items()}
-
-        # Get total_timestamps from the form input
-        total_timestamps = request.form.get('total_timestamps')
-        if total_timestamps:
-            hyperparameters['total_timestamps'] = int(total_timestamps)
 
         # Convert to appropriate types
         for param, details in param_details.items():

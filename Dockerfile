@@ -6,6 +6,8 @@ WORKDIR /app
 # Install Python dependencies
 COPY requirements.txt .
 RUN python -m pip install --no-cache-dir -r requirements.txt
+RUN python -m pip uninstall -y numpy
+RUN python -m pip install numpy
 
 # Install rendering tools
 RUN apt-get update && apt-get install -y \
